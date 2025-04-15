@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">投稿予約一覧</h2>
+
+  <a href="{% url 'schedule_create' %}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">＋ 新しい予約</a>
+
+  <table class="w-full border mt-4 text-left text-sm">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="p-2">内容</th>
+        <th class="p-2">予約時刻</th>
+        <th class="p-2">投稿済み</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in schedules %}
+      <tr class="border-t">
+        <td class="p-2">{{ s.content.title|default:"(無題)" }}</td>
+        <td class="p-2">{{ s.scheduled_time|date:"Y-m-d H:i" }}</td>
+        <td class="p-2">{{ s.is_posted|yesno:"✅,❌" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3" class="p-4 text-gray-500">予約はまだありません。</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
